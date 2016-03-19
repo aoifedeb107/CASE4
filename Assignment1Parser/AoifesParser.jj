@@ -1,0 +1,345 @@
+/*
+*
+*	CA4003 - Assignment 1 
+*	Aoife De Buitlear
+*	12376926
+*	
+* This assignment is my own work. 
+* I have not received assistance beyond what is normal
+* I are aware that copying or giving a copy may have serious consequences.
+*
+*/
+
+options {
+	JAVA_UNICODE_ESCAPE = true;
+	STATIC = false;
+	DEBUG_PARSER = true;
+	IGNORE_CASE = true;
+	//FORCE_LA_CHECK = true;
+	//LOOKAHEAD = 2;
+}
+
+PARSER_BEGIN(AoifesParser)
+
+public class AoifesParser{
+
+public static void main(String [] args){
+	AoifesParser parser;
+	try{
+		parser = new AoifesParser(new java.io.FileInputStream(args[0]));
+		}
+	catch (java.io.FileNotFoundException e)
+		{
+			System.err.println("File " + args[0] + " not found. Please try a different file name.");
+			return;
+		}
+		
+		try{
+			System.out.println("Running Aoife's parser program...");
+			parser.program();
+		}
+		catch(Exception e){
+			System.out.println("\n");
+			System.err.println(e.getMessage());
+		}		
+		
+	}
+}
+PARSER_END(AoifesParser)
+
+/********************
+	DECLARE TOKENS
+********************/
+
+TOKEN_MGR_DECLS :
+{
+	static int commentNesting = 0;
+}
+
+/* White Space */
+
+SKIP:
+{
+	" "
+	| "\t"
+	| "\n"
+	| "\r"
+}
+
+/* COMMENTS */
+SKIP : 
+{
+	"/*" { commentNesting ++; } : IN_COMMENT
+	| <"--" (~["\r", "\n"])*>
+}
+
+<IN_COMMENT> SKIP :
+{
+	"/*" { commentNesting++; }
+	| "*/" { commentNesting--;
+			if(commentNesting == 0)
+				SwitchTo(DEFAULT);
+	}
+	| <~[]>
+}
+
+
+/* Reserved words .. tokens */
+TOKEN :
+{
+	< AND: "and" >
+	|	< BOOL: "bool" >
+	|	< CONST: "const" >
+	| 	< DO: "do" >
+	| 	< ELSE: "else" >
+	| 	< FALSE: "false" >
+	|	< IF: "if" >
+	| 	< INT: "int" >
+	|	< MAIN: "main" >
+	|	< NOT: "not" >
+	| 	< OR: "or" >
+	|	< RETURN: "return" >
+	| 	< THEN: "then" >
+	|	< TRUE: "true" >
+	|	< VAR: "var" >
+	| 	< VOID: "void" >
+	|	< WHILE: "while" >
+	|	< BEGIN: "begin" >
+	| 	< END: "end" >
+}
+
+/* IDENTIFIERS */
+/* Any string of letters, digits or underscore character beginning with a letter */
+
+TOKEN :
+	{
+	< IDENTIFIER: <LETTER> (<STRING_OF_SORTS>)* >
+	|
+	< #LETTER:
+		[ "A"-"Z", "a"-"z" ]
+	>
+	|
+	< #STRING_OF_SORTS:
+		[ "a"-"z", "A"-"Z", "0"-"9", "_" ]
+	>
+	}
+	
+/* NUMBERS */
+TOKEN:
+{
+	<NUMBER : <DIGITS> | <DIGITS> "." <DIGITS>>
+}
+TOKEN:
+{
+	<#DIGIT : (["0"-"9"])>
+	| < #DIGITS : (<DIGIT>)+ >
+}
+
+/* OPERATORS AND RELATIONS */
+
+TOKEN :
+{
+	< ADD: "+" >
+	|	< SUB: "-" >
+	|	< MUL: "*" >
+	|	< DIV: "/" >
+	|	< EQ: "=" >
+	| 	< NEQ: "!=" >
+	|	< LT: "<" >
+	|	< GT: ">" >
+	|	< LTEQ: "<=" >
+	|	< GTEQ: ">=" >
+	|	< LPAREN: "(" >
+	|	< RPAREN: ")" >
+	|	< COMMA: "," >
+	|	< SEMICOLON: ";" >
+	|	< COLON: ":" >
+	|	< ASSIGN: ":=" > 
+}
+
+/**************************
+	JAVA LANGAUGE GRAMMAR 
+***************************/
+
+void program():
+{}
+{
+	(
+	(decl())*
+	(function())*
+	main_prog()
+	)
+	<EOF>
+}
+
+/*****DECLARATION*******/
+
+void decl() :
+{}
+{
+	(
+		var_decl()
+		|const_decl()
+	)
+}
+
+/*******Define*******/
+
+void var_decl()  :
+{}
+{
+	<VAR> ident_list() <COLON> type() (<COMMA> ident_list() <COLON> type())* <SEMICOLON>
+}
+
+void const_decl() :
+{}
+{
+	<CONST> <IDENTIFIER> <COLON> type() <EQ> expression() ( <COMMA> <IDENTIFIER> <COLON> type() <EQ> expression())* <SEMICOLON>
+}
+
+/******Function******/
+
+void function():
+{}
+{
+	type() <IDENTIFIER> <LPAREN> param_list() <RPAREN>
+	<BEGIN>
+	( decl() )*
+	( statement() <SEMICOLON> )*
+	<RETURN>  expression() | {}  <SEMICOLON>
+	<END>
+}
+
+void param_list() :
+{}
+{
+	( <IDENTIFIER> <COLON> type() (<COMMA> <IDENTIFIER> <COLON> type())* | {} ) 
+}
+
+/*****Variable Type*****/
+
+void type() :
+{}
+{
+	<INT>
+	
+	|
+	
+	<BOOL>
+	
+	|
+	
+	<VOID>
+	
+}
+
+/*****Main Program*****/
+
+void main_prog() :
+{}
+{
+	<MAIN>
+	<BEGIN>
+	(decl())*
+	(statement() <SEMICOLON>)*
+	<END>
+}
+
+/*****SStatement Defined*****/
+
+void statement() :
+{}
+{
+	<IDENTIFIER> (<ASSIGN> expression() | <LPAREN> arg_list() <RPAREN> ) 
+	| <BEGIN> ( statement() <SEMICOLON>)* <END>
+	| <IF> condition() <THEN> statement() <SEMICOLON> <ELSE> statement()
+	| <WHILE> condition() <DO> statement()
+	| {} 
+}
+
+
+/*****Expression Defined*****/
+
+void expression() :
+{}
+{
+	fragmentCheck() expressionNew()
+}
+
+void fragmentCheck() :
+{}
+{
+	fragment() fragmentNew()
+}
+
+void expressionNew() :
+{}
+{
+	<ADD> expression()
+	|<SUB> expression()
+	| <IDENTIFIER> <LPAREN> arg_list() <RPAREN>
+	| {}
+}
+
+void fragment() :
+{}
+{
+	<IDENTIFIER> 
+	| <TRUE> 
+	| <FALSE> 
+	| <NUMBER> 
+	| (<ADD>|<SUB>)fragment()
+	|{}
+
+}
+
+
+void fragmentNew() : {}
+{
+	<MUL> fragment()
+	|<DIV> fragment()
+	|{}
+}
+
+void condition() :
+{}
+{
+	//LOOKAHEAD(2)
+	<NOT> condition()
+	|[<LPAREN>] conditionNew() [<RPAREN>] cond()
+}
+
+void conditionNew() :
+{}
+{	
+	expression() (assignments() expression() 
+	| <LPAREN> expression() <RPAREN> conditionNew() 
+	| expression()) 
+}
+
+/*Created new function to hold assignments for ease of use*/
+void assignments() :
+{}
+{
+	<EQ> | <NEQ> | <LT> | <GT> | <LTEQ> | <GTEQ>
+}
+
+void cond() :
+{}
+{
+	<AND> condition()
+	|<OR>  condition()
+	| {}
+}
+
+void ident_list() :
+{}
+{
+	<IDENTIFIER> (<COMMA> <IDENTIFIER>)*
+}
+
+void arg_list() :
+{}
+{
+	(<IDENTIFIER>(<COMMA> <IDENTIFIER>)*|{})
+}

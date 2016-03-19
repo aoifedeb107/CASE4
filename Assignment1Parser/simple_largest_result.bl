@@ -1,0 +1,369 @@
+Running Aoife's parser program...
+Call:   program
+  Call:   decl
+    Call:   var_decl
+      Consumed token: <"var" at line 8 column 1>
+      Call:   ident_list
+        Consumed token: <<IDENTIFIER>: "result" at line 8 column 5>
+      Return: ident_list
+      Consumed token: <":" at line 8 column 11>
+      Call:   type
+        Consumed token: <"int" at line 8 column 12>
+      Return: type
+      Consumed token: <";" at line 8 column 15>
+    Return: var_decl
+  Return: decl
+  Call:   decl
+    Call:   const_decl
+      Consumed token: <"const" at line 9 column 1>
+      Consumed token: <<IDENTIFIER>: "MyConst" at line 9 column 7>
+      Consumed token: <":" at line 9 column 14>
+      Call:   type
+        Consumed token: <"int" at line 9 column 15>
+      Return: type
+      Consumed token: <"=" at line 9 column 19>
+      Call:   expression
+        Call:   fragmentCheck
+          Call:   fragment
+            Consumed token: <<NUMBER>: "10" at line 9 column 21>
+          Return: fragment
+          Call:   fragmentNew
+          Return: fragmentNew
+        Return: fragmentCheck
+        Call:   expressionNew
+        Return: expressionNew
+      Return: expression
+      Consumed token: <";" at line 9 column 23>
+    Return: const_decl
+  Return: decl
+  Call:   function
+    Call:   type
+      Consumed token: <"bool" at line 11 column 1>
+    Return: type
+    Consumed token: <<IDENTIFIER>: "is_largest" at line 11 column 6>
+    Consumed token: <"(" at line 11 column 16>
+    Call:   param_list
+      Consumed token: <<IDENTIFIER>: "x" at line 11 column 17>
+      Consumed token: <":" at line 11 column 18>
+      Call:   type
+        Consumed token: <"int" at line 11 column 19>
+      Return: type
+    Return: param_list
+    Consumed token: <")" at line 11 column 22>
+    Consumed token: <"begin" at line 12 column 1>
+    Call:   decl
+      Call:   var_decl
+        Consumed token: <"var" at line 13 column 9>
+        Call:   ident_list
+          Consumed token: <<IDENTIFIER>: "integer" at line 13 column 13>
+        Return: ident_list
+        Consumed token: <":" at line 13 column 20>
+        Call:   type
+          Consumed token: <"int" at line 13 column 21>
+        Return: type
+        Consumed token: <"," at line 13 column 24>
+        Call:   ident_list
+          Consumed token: <<IDENTIFIER>: "largest" at line 13 column 25>
+        Return: ident_list
+        Consumed token: <":" at line 13 column 32>
+        Call:   type
+          Consumed token: <"bool" at line 13 column 33>
+        Return: type
+        Consumed token: <";" at line 13 column 37>
+      Return: var_decl
+    Return: decl
+    Call:   statement
+      Consumed token: <"if" at line 14 column 9>
+      Call:   condition
+        Call:   conditionNew
+          Call:   expression
+            Call:   fragmentCheck
+              Call:   fragment
+                Consumed token: <<IDENTIFIER>: "x" at line 14 column 12>
+              Return: fragment
+              Call:   fragmentNew
+              Return: fragmentNew
+            Return: fragmentCheck
+            Call:   expressionNew
+            Return: expressionNew
+          Return: expression
+          Call:   assignments
+            Consumed token: <">" at line 14 column 14>
+          Return: assignments
+          Call:   expression
+            Call:   fragmentCheck
+              Call:   fragment
+                Consumed token: <<IDENTIFIER>: "integer" at line 14 column 16>
+              Return: fragment
+              Call:   fragmentNew
+              Return: fragmentNew
+            Return: fragmentCheck
+            Call:   expressionNew
+            Return: expressionNew
+          Return: expression
+        Return: conditionNew
+        Call:   cond
+        Return: cond
+      Return: condition
+      Consumed token: <"then" at line 15 column 17>
+      Call:   statement
+        Consumed token: <<IDENTIFIER>: "largest" at line 16 column 17>
+        Consumed token: <":=" at line 16 column 25>
+        Call:   expression
+          Call:   fragmentCheck
+            Call:   fragment
+              Consumed token: <"true" at line 16 column 28>
+            Return: fragment
+            Call:   fragmentNew
+            Return: fragmentNew
+          Return: fragmentCheck
+          Call:   expressionNew
+          Return: expressionNew
+        Return: expression
+      Return: statement
+      Consumed token: <";" at line 16 column 32>
+      Consumed token: <"else" at line 17 column 9>
+      Call:   statement
+        Consumed token: <<IDENTIFIER>: "largest" at line 18 column 17>
+        Consumed token: <":=" at line 18 column 25>
+        Call:   expression
+          Call:   fragmentCheck
+            Call:   fragment
+              Consumed token: <"false" at line 18 column 28>
+            Return: fragment
+            Call:   fragmentNew
+            Return: fragmentNew
+          Return: fragmentCheck
+          Call:   expressionNew
+          Return: expressionNew
+        Return: expression
+      Return: statement
+    Return: statement
+    Consumed token: <";" at line 18 column 33>
+    Consumed token: <"return" at line 19 column 9>
+    Call:   expression
+      Call:   fragmentCheck
+        Call:   fragment
+          Consumed token: <<IDENTIFIER>: "largest" at line 19 column 16>
+        Return: fragment
+        Call:   fragmentNew
+        Return: fragmentNew
+      Return: fragmentCheck
+      Call:   expressionNew
+      Return: expressionNew
+    Return: expression
+  Return: function
+  Call:   function
+    Consumed token: <";" at line 19 column 23>
+    Consumed token: <"end" at line 20 column 1>
+  Return: function
+  Call:   main_prog
+    Consumed token: <"main" at line 21 column 1>
+    Consumed token: <"begin" at line 22 column 1>
+    Call:   decl
+      Call:   var_decl
+        Consumed token: <"var" at line 24 column 9>
+        Call:   ident_list
+          Consumed token: <<IDENTIFIER>: "i" at line 24 column 13>
+        Return: ident_list
+        Consumed token: <":" at line 24 column 14>
+        Call:   type
+          Consumed token: <"int" at line 24 column 15>
+        Return: type
+        Consumed token: <"," at line 24 column 18>
+        Call:   ident_list
+          Consumed token: <<IDENTIFIER>: "num" at line 24 column 20>
+        Return: ident_list
+        Consumed token: <":" at line 24 column 23>
+        Call:   type
+          Consumed token: <"int" at line 24 column 24>
+        Return: type
+        Consumed token: <";" at line 24 column 27>
+      Return: var_decl
+    Return: decl
+    Call:   statement
+      Consumed token: <<IDENTIFIER>: "num" at line 25 column 9>
+      Consumed token: <":=" at line 25 column 13>
+      Call:   expression
+        Call:   fragmentCheck
+          Call:   fragment
+            Consumed token: <<NUMBER>: "5" at line 25 column 16>
+          Return: fragment
+          Call:   fragmentNew
+          Return: fragmentNew
+        Return: fragmentCheck
+        Call:   expressionNew
+        Return: expressionNew
+      Return: expression
+    Return: statement
+    Consumed token: <";" at line 25 column 17>
+    Call:   statement
+      Consumed token: <<IDENTIFIER>: "i" at line 26 column 9>
+      Consumed token: <":=" at line 26 column 10>
+      Call:   expression
+        Call:   fragmentCheck
+          Call:   fragment
+            Consumed token: <<NUMBER>: "1" at line 26 column 12>
+          Return: fragment
+          Call:   fragmentNew
+          Return: fragmentNew
+        Return: fragmentCheck
+        Call:   expressionNew
+        Return: expressionNew
+      Return: expression
+    Return: statement
+    Consumed token: <";" at line 26 column 13>
+    Call:   statement
+      Consumed token: <"while" at line 28 column 9>
+      Call:   condition
+        Call:   conditionNew
+          Call:   expression
+            Call:   fragmentCheck
+              Call:   fragment
+                Consumed token: <<IDENTIFIER>: "i" at line 28 column 15>
+              Return: fragment
+              Call:   fragmentNew
+              Return: fragmentNew
+            Return: fragmentCheck
+            Call:   expressionNew
+            Return: expressionNew
+          Return: expression
+          Call:   assignments
+            Consumed token: <"<=" at line 28 column 17>
+          Return: assignments
+          Call:   expression
+            Call:   fragmentCheck
+              Call:   fragment
+                Consumed token: <<IDENTIFIER>: "N" at line 28 column 20>
+              Return: fragment
+              Call:   fragmentNew
+              Return: fragmentNew
+            Return: fragmentCheck
+            Call:   expressionNew
+            Return: expressionNew
+          Return: expression
+        Return: conditionNew
+        Call:   cond
+        Return: cond
+      Return: condition
+      Consumed token: <"do" at line 28 column 22>
+      Call:   statement
+        Consumed token: <"begin" at line 29 column 9>
+        Call:   statement
+          Consumed token: <"if" at line 30 column 17>
+          Call:   condition
+            Call:   conditionNew
+              Call:   expression
+                Call:   fragmentCheck
+                  Call:   fragment
+                    Consumed token: <<IDENTIFIER>: "is_largest" at line 30 column 20>
+                  Return: fragment
+                  Call:   fragmentNew
+                  Return: fragmentNew
+                Return: fragmentCheck
+                Call:   expressionNew
+                Return: expressionNew
+              Return: expression
+              Consumed token: <"(" at line 30 column 30>
+              Call:   expression
+                Call:   fragmentCheck
+                  Call:   fragment
+                    Consumed token: <<IDENTIFIER>: "i" at line 30 column 31>
+                  Return: fragment
+                  Call:   fragmentNew
+                  Return: fragmentNew
+                Return: fragmentCheck
+                Call:   expressionNew
+                Return: expressionNew
+              Return: expression
+              Consumed token: <")" at line 30 column 32>
+              Call:   conditionNew
+                Call:   expression
+                  Call:   fragmentCheck
+                    Call:   fragment
+                    Return: fragment
+                    Call:   fragmentNew
+                    Return: fragmentNew
+                  Return: fragmentCheck
+                  Call:   expressionNew
+                  Return: expressionNew
+                Return: expression
+                Call:   expression
+                  Call:   fragmentCheck
+                    Call:   fragment
+                    Return: fragment
+                    Call:   fragmentNew
+                    Return: fragmentNew
+                  Return: fragmentCheck
+                  Call:   expressionNew
+                  Return: expressionNew
+                Return: expression
+              Return: conditionNew
+            Return: conditionNew
+            Call:   cond
+            Return: cond
+          Return: condition
+          Consumed token: <"then" at line 31 column 17>
+          Call:   statement
+            Consumed token: <<IDENTIFIER>: "num" at line 32 column 25>
+            Consumed token: <":=" at line 32 column 29>
+            Call:   expression
+              Call:   fragmentCheck
+                Call:   fragment
+                  Consumed token: <<IDENTIFIER>: "i" at line 32 column 32>
+                Return: fragment
+                Call:   fragmentNew
+                Return: fragmentNew
+              Return: fragmentCheck
+              Call:   expressionNew
+              Return: expressionNew
+            Return: expression
+          Return: statement
+          Consumed token: <";" at line 32 column 33>
+          Consumed token: <"else" at line 33 column 17>
+          Call:   statement
+            Consumed token: <"begin" at line 34 column 25>
+            Call:   statement
+              Consumed token: <<IDENTIFIER>: "num" at line 35 column 33>
+              Consumed token: <":=" at line 35 column 37>
+              Call:   expression
+                Call:   fragmentCheck
+                  Call:   fragment
+                    Consumed token: <<NUMBER>: "5" at line 35 column 40>
+                  Return: fragment
+                  Call:   fragmentNew
+                  Return: fragmentNew
+                Return: fragmentCheck
+                Call:   expressionNew
+                Return: expressionNew
+              Return: expression
+            Return: statement
+            Consumed token: <";" at line 35 column 41>
+            Consumed token: <"end" at line 36 column 25>
+          Return: statement
+        Return: statement
+        Consumed token: <";" at line 36 column 28>
+        Consumed token: <"end" at line 38 column 9>
+      Return: statement
+    Return: statement
+    Consumed token: <";" at line 38 column 12>
+    Call:   statement
+      Consumed token: <<IDENTIFIER>: "result" at line 40 column 9>
+      Consumed token: <":=" at line 40 column 16>
+      Call:   expression
+        Call:   fragmentCheck
+          Call:   fragment
+            Consumed token: <<IDENTIFIER>: "num" at line 40 column 19>
+          Return: fragment
+          Call:   fragmentNew
+          Return: fragmentNew
+        Return: fragmentCheck
+        Call:   expressionNew
+        Return: expressionNew
+      Return: expression
+    Return: statement
+    Consumed token: <";" at line 40 column 22>
+    Consumed token: <"end" at line 43 column 1>
+  Return: main_prog
+  Consumed token: <<EOF> at line 43 column 31>
+Return: program
